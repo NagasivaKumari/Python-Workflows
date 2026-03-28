@@ -229,3 +229,5 @@ if st.button("🚀 Analyze Health Risk"):
 st.markdown("## 📊 Model Accuracy")
 for name, acc in accuracies.items():
     st.write(f"{name}: {round(acc * 100, 2)}%")
+
+These is a streamlit application
