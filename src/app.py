@@ -12,13 +12,6 @@ from sklearn.metrics import accuracy_score
 
 import plotly.graph_objects as go
 
-# ------------------ SYSTEM READINESS ------------------
-
-
-def check_system_ready():
-    return True, "All dependencies loaded successfully"
-
-
 # ------------------ PAGE CONFIG ------------------
 
 st.set_page_config(page_title="Health Risk AI", layout="wide")
@@ -37,23 +30,10 @@ else:
     st.error(f"❌ System Not Ready: {msg}")
 
 
-# ------------------ LOAD DATA ------------------
-
-
-@st.cache_data
-def load_data():
-    path = os.path.join(os.path.dirname(__file__), "Dataset.csv")
-    df = pd.read_csv(path, encoding="latin1")
-    df["Chronic Disease History"] = df["Chronic Disease History"].fillna("None")
-    return df
-
-
-try:
-    df = load_data()
-except Exception as e:
-    st.error(f"❌ Dataset loading failed: {e}")
-    st.stop()
-
+# ------------------ LOAD DATASET ------------------
+DATASET_PATH = os.path.join(os.path.dirname(__file__), "Dataset.csv")
+df = pd.read_csv(DATASET_PATH, encoding="latin1")
+df["Chronic Disease History"] = df["Chronic Disease History"].fillna("None")
 
 # ------------------ PREPROCESS ------------------
 
@@ -85,17 +65,12 @@ scaler = StandardScaler()
 X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
 
-
-# ------------------ MODEL TRAINING ------------------
-
-
-@st.cache_resource
-def train_models():
-    models = {
-        "Logistic Regression": LogisticRegression(max_iter=1000),
-        "Decision Tree": DecisionTreeClassifier(max_depth=5),
-        "Random Forest": RandomForestClassifier(n_estimators=100),
-    }
+# ------------------ MODELS ------------------
+models = {
+    "Logistic Regression": LogisticRegression(max_iter=1000),
+    "Decision Tree": DecisionTreeClassifier(max_depth=5),
+    "Random Forest": RandomForestClassifier(n_estimators=100),
+}
 
     trained_models = {}
     accuracies = {}
@@ -254,11 +229,10 @@ if st.button("🚀 Analyze Health Risk"):
         for name, model in trained_models.items():
             pred = model.predict(input_scaled)
             label = label_encoder.inverse_transform(pred)[0]
-
             prob = max(model.predict_proba(input_scaled)[0]) * 100
+            st.write(f"{name} → {label} ({round(prob, 2)}%)")
 
-            st.write(f"{name}: {label} ({round(prob, 2)}%)")
-
+        # FINAL RESULT
         rf_model = trained_models["Random Forest"]
         score = max(rf_model.predict_proba(input_scaled)[0]) * 100
 
@@ -267,7 +241,7 @@ if st.button("🚀 Analyze Health Risk"):
         if score < 33:
             st.success(f"LOW RISK ({round(score, 2)}%)")
         elif score < 66:
-            st.warning(f"MODERATE RISK ({round(score, 2)}%)")
+            st.warning(f"🟡 MODERATE RISK ({round(score, 2)}%)")
         else:
             st.error(f"HIGH RISK ({round(score, 2)}%)")
 
