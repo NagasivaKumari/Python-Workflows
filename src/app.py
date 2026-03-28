@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import os
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.linear_model import LogisticRegression
@@ -49,8 +50,6 @@ st.markdown(
 )
 
 # ------------------ LOAD DATASET ------------------
-import os
-
 DATASET_PATH = os.path.join(os.path.dirname(__file__), "Dataset.csv")
 df = pd.read_csv(DATASET_PATH, encoding="latin1")
 df["Chronic Disease History"] = df["Chronic Disease History"].fillna("None")
