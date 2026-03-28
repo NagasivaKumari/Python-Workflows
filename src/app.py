@@ -50,6 +50,7 @@ st.markdown(
 
 # ------------------ LOAD DATASET ------------------
 import os
+
 DATASET_PATH = os.path.join(os.path.dirname(__file__), "Dataset.csv")
 df = pd.read_csv(DATASET_PATH, encoding="latin1")
 df["Chronic Disease History"] = df["Chronic Disease History"].fillna("None")

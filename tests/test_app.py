@@ -1,13 +1,10 @@
-
 import sys
 import os
 import importlib.util
 
-
 # Dynamically import explain_risk from app.py
 spec = importlib.util.spec_from_file_location(
-    "app",
-    os.path.join(os.path.dirname(__file__), "../src/app.py")
+    "app", os.path.join(os.path.dirname(__file__), "../src/app.py")
 )
 app = importlib.util.module_from_spec(spec)
 sys.modules["app"] = app
