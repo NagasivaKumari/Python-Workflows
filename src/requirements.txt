@@ -1,0 +1,8 @@
+# Add Streamlit for the web app
+# Add Streamlit for the web app
+streamlit
+scikit-learn
+# Python dependencies
+pytest
+flake8
+black
