@@ -13,6 +13,7 @@ app = importlib.util.module_from_spec(spec)
 sys.modules["app"] = app
 spec.loader.exec_module(app)
 
+
 def test_explain_risk():
     user_data = {
         "Age": 65,
