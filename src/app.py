@@ -132,7 +132,7 @@ def explain_risk(user_data):
     if user_data["BMI"] > 30:
         reasons.append("High BMI (Obesity)")
     if user_data["Smoking Status"] == "Current":
-        reasons.append("Smoking increases risk")
+        reasons.append("Smoking increases disease risk")
     if user_data["Alcohol Consumption (per week)"] > 12:
         reasons.append("High alcohol consumption")
     if user_data["Physical Activity (hours/week)"] < 2:
