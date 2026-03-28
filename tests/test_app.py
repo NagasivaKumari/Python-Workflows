@@ -9,6 +9,8 @@ app = importlib.util.module_from_spec(spec)
 sys.modules["app"] = app
 spec.loader.exec_module(app)
 
+
+
 def test_explain_risk():
     user_data = {
         "Age": 65,
@@ -18,7 +20,7 @@ def test_explain_risk():
         "Physical Activity (hours/week)": 1,
         "Sleep Duration (hours/day)": 5,
         "Stress Level (1-10)": 9,
-        "Chronic Disease History": "Diabetes"
+        "Chronic Disease History": "Diabetes",
     }
     reasons = app.explain_risk(user_data)
     assert "Age above 60 increases risk" in reasons
