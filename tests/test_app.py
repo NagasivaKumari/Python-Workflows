@@ -25,7 +25,7 @@ def test_explain_risk():
     reasons = app.explain_risk(user_data)
     assert "Age above 60 increases risk" in reasons
     assert "High BMI (Obesity)" in reasons
-    assert "Smoking increases risk" in reasons
+    assert "Smoking increases disease risk" in reasons
     assert "High alcohol consumption" in reasons
     assert "Low physical activity" in reasons
     assert "Poor sleep" in reasons
